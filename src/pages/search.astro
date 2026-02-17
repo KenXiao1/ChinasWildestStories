@@ -66,7 +66,7 @@ const chapters = (await getCollection("chapters", ({ data }) => data.status === 
   input?.addEventListener("input", onInput);
 </script>
 
-<style>
+<style is:global>
   h2 {
     margin: 0;
   }
@@ -89,13 +89,34 @@ const chapters = (await getCollection("chapters", ({ data }) => data.status === 
   }
   #results {
     margin: 0.9rem 0 0;
-    padding-left: 1rem;
+    padding: 0;
+    list-style: none;
     display: grid;
-    gap: 0.9rem;
+    gap: 1px;
   }
+  #results li {
+    border-radius: 0.35rem;
+    border: 1px solid transparent;
+    transition: background .15s, border-color .15s;
+  }
+  #results li:hover {
+    background: var(--bg);
+    border-color: var(--line);
+  }
+  #results a {
+    display: block;
+    padding: 0.55rem 0.75rem 0;
+    text-decoration: none;
+    color: var(--bg-ink);
+    font-weight: 600;
+    transition: color .15s;
+  }
+  #results li:hover a { color: var(--accent); }
   #results p {
-    margin: 0.3rem 0 0;
+    margin: 0.25rem 0 0;
+    padding: 0 0.75rem 0.55rem;
     color: var(--muted);
+    font-size: 0.9rem;
   }
   mark {
     background: #ffeb9f;
