@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "mcp__firecrawl__firecrawl_scrape",
+      "WebFetch(domain:cn-nonsense.pages.dev)"
     ]
   }
 }
