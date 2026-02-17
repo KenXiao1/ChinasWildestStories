@@ -8,9 +8,18 @@ const latest = chapters.at(-1);
 ---
 
 <BaseLayout title="全中国最激烈故事 · 在线阅读">
-  <section class="frame hero">
-    <h2>全中国最激烈故事</h2>
-    <p class="desc">卷一连载中，持续更新。点击下方开始阅读。</p>
+  <section class="manifesto">
+    <h2 class="title-main">全中国最<br/>激烈故事</h2>
+    <blockquote class="quote">
+      "我是玉皇大帝的女婿！丈人叫我领十万天兵……
+       阎罗大王做先锋，五道将军做合后，
+       给一颗金印，重八百余斤，来杀你们这帮鸟人！"
+    </blockquote>
+  </section>
+
+  <img class="cover" src="https://raw.githubusercontent.com/KenXiao1/cn-nonsense/main/images/COVER.jpg" alt="封面" />
+
+  <section class="entry">
     <div class="actions">
       <a class="primary" href="/book/book-1/chapter/b1-c001">开始阅读</a>
       {latest ? <a href={`/book/${latest.data.book_id}/chapter/${latest.data.chapter_id}`}>最新章节</a> : null}
@@ -27,14 +36,50 @@ const latest = chapters.at(-1);
 </BaseLayout>
 
 <style>
-  .hero h2 {
-    margin: 0 0 0.4rem;
-    font-size: clamp(1.5rem, 3.5vw, 2rem);
+  .manifesto {
+    padding: 2rem 0 1.5rem 1.5rem;
+    position: relative;
   }
-  .desc {
-    margin: 0;
-    color: var(--muted);
+  .manifesto::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--accent);
+    margin-top: 1.5rem;
+  }
+  .title-main {
+    font-family: "Noto Sans SC", sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    line-height: 1.1;
+    margin: 0 0 1.2rem;
+    letter-spacing: -0.02em;
+  }
+  :global(html.dark) .title-main {
+    text-shadow: 0 0 40px var(--accent-glow);
+  }
+  .quote {
+    margin: 0 0 1rem;
+    padding-left: 1rem;
+    border-left: 3px solid var(--accent);
+    color: var(--accent);
+    font-weight: 700;
     line-height: 1.8;
+    font-size: 0.95rem;
+  }
+  :global(html.dark) .quote {
+    text-shadow: 0 0 20px var(--accent-glow);
+  }
+  .cover {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    margin: 1.5rem 0 0 1.5rem;
+    border: 1px solid var(--line);
+  }
+  .entry {
+    padding-left: 1.5rem;
   }
   .actions {
     margin-top: 1.2rem;
@@ -45,7 +90,7 @@ const latest = chapters.at(-1);
   .actions a {
     text-decoration: none;
     padding: 0.45rem 0.9rem;
-    border-radius: 0.35rem;
+    border-radius: 0;
     border: 1px solid var(--line);
     color: var(--bg-ink);
     font-size: 0.92rem;
@@ -67,5 +112,9 @@ const latest = chapters.at(-1);
     margin: 0 0 0.6rem;
     font-size: 0.92rem;
     color: var(--muted);
+  }
+  @media (max-width: 640px) {
+    .manifesto, .entry { padding-left: 0.5rem; }
+    .cover { margin-left: 0.5rem; }
   }
 </style>
