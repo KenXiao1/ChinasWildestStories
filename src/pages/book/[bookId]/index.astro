@@ -19,12 +19,13 @@ const chapters = (await getCollection("chapters", ({ data }) =>
 <BaseLayout title={`${book.data.title} · 目录`}>
   <section class="frame">
     <h2>{book.data.title}</h2>
-    <p class="meta">book_id: {book.data.book_id}</p>
     <ol>
-      {chapters.map((chapter) => (
+      {chapters.map((chapter, i) => (
         <li>
           <a href={`/book/${book.data.book_id}/chapter/${chapter.data.chapter_id}`}>
-            {chapter.data.title}
+            <span class="num">{String(i + 1).padStart(2, '0')}</span>
+            <span class="title">{chapter.data.title}</span>
+            <span class="arrow">→</span>
           </a>
         </li>
       ))}
@@ -33,20 +34,43 @@ const chapters = (await getCollection("chapters", ({ data }) =>
 </BaseLayout>
 
 <style>
-  h2 {
-    margin: 0;
-  }
-
-  .meta {
-    margin: 0.2rem 0 1rem;
-    color: #6a6156;
-    font-size: 0.9rem;
-  }
-
+  h2 { margin: 0 0 1rem; }
   ol {
     margin: 0;
-    padding-left: 1.35rem;
+    padding: 0;
+    list-style: none;
     display: grid;
-    gap: 0.35rem;
+    gap: 1px;
+  }
+  li a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.75rem;
+    text-decoration: none;
+    color: var(--bg-ink);
+    border-radius: 0.35rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background .15s, border-color .15s, padding-left .15s;
+  }
+  li a:hover {
+    background: var(--bg);
+    border-color: var(--line);
+    padding-left: 1rem;
+  }
+  li a:hover .title { color: var(--accent); }
+  li a:hover .arrow { opacity: 1; color: var(--accent); }
+  .num {
+    color: var(--muted);
+    font-size: 0.82rem;
+    min-width: 1.5rem;
+  }
+  .title { flex: 1; }
+  .arrow {
+    opacity: 0;
+    color: var(--muted);
+    font-size: 0.85rem;
+    transition: opacity .15s, color .15s;
   }
 </style>

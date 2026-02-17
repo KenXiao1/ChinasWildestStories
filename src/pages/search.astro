@@ -74,32 +74,29 @@ const chapters = (await getCollection("chapters", ({ data }) => data.status === 
   #query {
     width: 100%;
     margin-top: 0.8rem;
-    border: 1px solid #b9aa92;
+    border: 1px solid var(--line);
     border-radius: 0.35rem;
     font-size: 1rem;
     padding: 0.58rem 0.72rem;
-    background: #fffefb;
+    background: var(--paper);
+    color: var(--bg-ink);
   }
-
   .tip {
-    color: #6c6256;
+    color: var(--muted);
     font-size: 0.9rem;
     margin-top: 0.6rem;
     margin-bottom: 0.2rem;
   }
-
   #results {
     margin: 0.9rem 0 0;
     padding-left: 1rem;
     display: grid;
     gap: 0.9rem;
   }
-
   #results p {
     margin: 0.3rem 0 0;
-    color: #5e564a;
+    color: var(--muted);
   }
-
   mark {
     background: #ffeb9f;
     color: inherit;

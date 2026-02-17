@@ -9,53 +9,46 @@ const latest = chapters.at(-1);
 
 <BaseLayout title="全中国最激烈故事 · 在线阅读">
   <section class="frame hero">
-    <p class="eyebrow">卷一在线阅读站</p>
     <h2>全中国最激烈故事</h2>
-    <p>
-      这个站点面向“持续收稿发布”：只需投递新版本 docx 或单章 docx，站点会保留固定
-      chapter_id，历史链接与评论不失效。
-    </p>
+    <p class="desc">卷一连载中，持续更新。点击下方开始阅读。</p>
     <div class="actions">
-      <a href="/book/book-1">进入第一部目录</a>
-      <a href="/search">全文检索</a>
-      <a href="/toc">全站目录</a>
-      {latest ? <a href={`/book/${latest.data.book_id}/chapter/${latest.data.chapter_id}`}>阅读最新章节</a> : null}
+      <a class="primary" href="/book/book-1/chapter/b1-c001">开始阅读</a>
+      {latest ? <a href={`/book/${latest.data.book_id}/chapter/${latest.data.chapter_id}`}>最新章节</a> : null}
+      <a href="/book/book-1">章节目录</a>
     </div>
   </section>
 </BaseLayout>
 
 <style>
   .hero h2 {
-    margin: 0.2rem 0 0.6rem;
-    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    margin: 0 0 0.4rem;
+    font-size: clamp(1.5rem, 3.5vw, 2rem);
   }
-
-  .hero p {
-    margin: 0.4rem 0;
-    line-height: 1.85;
-  }
-
-  .eyebrow {
+  .desc {
     margin: 0;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #8c1f1f;
-    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.8;
   }
-
   .actions {
-    margin-top: 1rem;
-    display: grid;
+    margin-top: 1.2rem;
+    display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
   }
-
   .actions a {
-    display: inline-block;
-    width: fit-content;
     text-decoration: none;
-    border: 1px solid rgba(186, 27, 29, 0.3);
-    padding: 0.38rem 0.62rem;
-    border-radius: 0.3rem;
-    background: rgba(255, 255, 255, 0.6);
+    padding: 0.45rem 0.9rem;
+    border-radius: 0.35rem;
+    border: 1px solid var(--line);
+    color: var(--bg-ink);
+    font-size: 0.92rem;
+    transition: border-color .2s;
   }
+  .actions a:hover { border-color: var(--accent); color: var(--accent); }
+  .actions a.primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .actions a.primary:hover { opacity: 0.85; color: #fff; }
 </style>

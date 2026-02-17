@@ -9,121 +9,137 @@ const { title = "全中国最激烈故事", description = "在线阅读站" } = 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link
-      rel="preconnect"
-      href="https://fonts.googleapis.com"
-    />
-    <link
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin="anonymous"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
+    <script is:inline>
+      (function(){
+        const t = localStorage.getItem('theme');
+        if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme:dark)').matches))
+          document.documentElement.classList.add('dark');
+      })();
+    </script>
     <style>
       :root {
-        --bg: #f4efe6;
-        --bg-ink: #131212;
-        --paper: #fff7ec;
-        --accent: #ba1b1d;
-        --muted: #5f5648;
-        --line: #cfbfa6;
+        --bg: #f5f1eb;
+        --bg-ink: #1a1a1a;
+        --paper: #fff;
+        --accent: #b02a2d;
+        --muted: #6b6259;
+        --line: #d6cbbe;
       }
-
-      * {
-        box-sizing: border-box;
+      html.dark {
+        --bg: #1a1a1a;
+        --bg-ink: #e0dcd6;
+        --paper: #242424;
+        --accent: #e05558;
+        --muted: #9a9189;
+        --line: #3a3632;
       }
-
+      * { box-sizing: border-box; }
       body {
         margin: 0;
         color: var(--bg-ink);
         font-family: "Noto Serif SC", serif;
-        background:
-          radial-gradient(circle at 10% 0%, #f1ddbe 0, transparent 35%),
-          radial-gradient(circle at 90% 20%, #eed8d1 0, transparent 30%),
-          linear-gradient(160deg, #f8f4ec 0%, #f0e6d9 60%, #efe2d0 100%);
+        background: var(--bg);
         min-height: 100vh;
+        transition: background .3s, color .3s;
       }
-
-      body::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        background-image:
-          linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-        background-size: 18px 18px;
-        opacity: 0.25;
-      }
-
       main {
-        max-width: 1080px;
+        max-width: 720px;
         margin: 0 auto;
-        padding: 2rem 1rem 4rem;
+        padding: 2rem 1.25rem 4rem;
       }
-
       .site-head {
         display: flex;
-        align-items: baseline;
+        align-items: center;
         justify-content: space-between;
         gap: 1rem;
-        border-bottom: 2px solid var(--line);
+        border-bottom: 1px solid var(--line);
         margin-bottom: 1.5rem;
         padding-bottom: 0.8rem;
       }
-
       .site-title {
-        font-family: "Bebas Neue", "Noto Serif SC", serif;
-        letter-spacing: 0.04em;
-        font-size: clamp(2rem, 5vw, 3.1rem);
+        font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+        font-weight: 700;
         margin: 0;
       }
-
       .site-title a {
         text-decoration: none;
         color: var(--bg-ink);
       }
-
-      .site-tag {
-        margin: 0;
-        color: var(--muted);
-        font-size: 0.95rem;
+      .head-right {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
       }
-
-      .frame {
-        background: color-mix(in srgb, var(--paper) 92%, white 8%);
+      .nav-link {
+        font-size: 0.88rem;
+        color: var(--muted);
+        text-decoration: none;
+      }
+      .nav-link:hover { color: var(--accent); }
+      .theme-toggle {
+        background: none;
         border: 1px solid var(--line);
-        box-shadow: 0 8px 0 rgba(0, 0, 0, 0.05);
+        border-radius: 50%;
+        width: 2rem;
+        height: 2rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        color: var(--muted);
+        transition: border-color .2s;
+        flex-shrink: 0;
+      }
+      .theme-toggle:hover { border-color: var(--accent); }
+      .frame {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 0.5rem;
         padding: 1.25rem;
       }
-
-      a {
-        color: var(--accent);
-      }
-
+      a { color: var(--accent); }
       @media (max-width: 640px) {
-        .site-head {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 0.5rem;
-        }
-
-        main {
-          padding-top: 1.2rem;
-        }
+        .site-head { gap: 0.5rem; }
+        main { padding-top: 1.2rem; }
       }
     </style>
   </head>
   <body>
     <main>
       <header class="site-head">
-        <h1 class="site-title"><a href="/">China's Wildest Stories</a></h1>
-        <p class="site-tag">按章节阅读 · 固定 chapter_id · 可持续更新</p>
+        <h1 class="site-title"><a href="/">全中国最激烈故事</a></h1>
+        <div class="head-right">
+          <a href="/search" class="nav-link">搜索</a>
+          <button class="theme-toggle" id="theme-toggle" aria-label="切换深色模式">
+            <span id="theme-icon">☀</span>
+          </button>
+        </div>
       </header>
       <slot />
     </main>
+    <script is:inline>
+      (function(){
+        const btn = document.getElementById('theme-toggle');
+        const icon = document.getElementById('theme-icon');
+        function update(){
+          const dark = document.documentElement.classList.contains('dark');
+          icon.textContent = dark ? '☀' : '☾';
+        }
+        update();
+        btn.addEventListener('click', function(){
+          document.documentElement.classList.toggle('dark');
+          const dark = document.documentElement.classList.contains('dark');
+          localStorage.setItem('theme', dark ? 'dark' : 'light');
+          update();
+        });
+      })();
+    </script>
   </body>
 </html>

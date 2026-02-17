@@ -35,9 +35,6 @@ const next = currentIndex >= 0 && currentIndex < siblingChapters.length - 1
 <BaseLayout title={`${chapter.data.title} · 在线阅读`}>
   <article class="frame chapter">
     <header>
-      <p class="badge">
-        {chapter.data.book_id} / {chapter.data.chapter_id}
-      </p>
       <h2>{chapter.data.title}</h2>
     </header>
     <Content />
@@ -64,32 +61,21 @@ const next = currentIndex >= 0 && currentIndex < siblingChapters.length - 1
     line-height: 1.95;
     font-size: 1.02rem;
   }
-
   .chapter header {
-    border-bottom: 1px dashed #b8a78f;
+    border-bottom: 1px dashed var(--line);
     margin-bottom: 1rem;
     padding-bottom: 0.8rem;
   }
-
-  .badge {
-    margin: 0;
-    color: #7a6f61;
-    font-size: 0.85rem;
-    letter-spacing: 0.04em;
-  }
-
   h2 {
-    margin: 0.2rem 0 0;
+    margin: 0;
     font-size: clamp(1.35rem, 3.5vw, 2rem);
   }
-
   :global(.chapter img) {
     max-width: 100%;
     height: auto;
-    border: 1px solid #d8c7ab;
-    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 0.25rem;
   }
-
   .pager {
     margin-top: 1rem;
     display: flex;
@@ -97,11 +83,10 @@ const next = currentIndex >= 0 && currentIndex < siblingChapters.length - 1
     gap: 0.8rem;
     flex-wrap: wrap;
   }
-
-  .pager a,
-  .pager span {
-    color: #5a4f43;
+  .pager a, .pager span {
+    color: var(--muted);
     text-decoration: none;
     font-size: 0.93rem;
   }
+  .pager a:hover { color: var(--accent); }
 </style>

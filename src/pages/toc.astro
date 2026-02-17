@@ -21,7 +21,7 @@ for (const [bookId, list] of grouped.entries()) {
 <BaseLayout title="全站目录">
   <section class="frame">
     <h2>目录总览</h2>
-    {books.length === 0 ? <p>暂无已导入图书，请先执行 ingest。</p> : null}
+    {books.length === 0 ? <p>暂无作品。</p> : null}
     {books.map((book) => (
       <article class="book">
         <h3><a href={`/book/${book.data.book_id}`}>{book.data.title}</a></h3>
@@ -47,7 +47,7 @@ for (const [bookId, list] of grouped.entries()) {
   .book + .book {
     margin-top: 1.2rem;
     padding-top: 1rem;
-    border-top: 1px dashed #b8a78f;
+    border-top: 1px dashed var(--line);
   }
 
   h3 {
