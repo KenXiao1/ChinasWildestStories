@@ -12,27 +12,25 @@ const theme = import.meta.env.PUBLIC_GISCUS_THEME ?? "preferred_color_scheme";
 const lang = import.meta.env.PUBLIC_GISCUS_LANG ?? "zh-CN";
 ---
 
-<section class="frame comments" id="giscus-comments" data-giscus-theme={theme}>
+<section
+  class="frame comments"
+  id="giscus-comments"
+  data-giscus-theme={theme}
+  data-giscus-repo={repo}
+  data-giscus-repo-id={repoId}
+  data-giscus-category={category}
+  data-giscus-category-id={categoryId}
+  data-giscus-mapping={mapping}
+  data-giscus-strict={strict}
+  data-giscus-reactions-enabled={reactionsEnabled}
+  data-giscus-emit-metadata={emitMetadata}
+  data-giscus-input-position={inputPosition}
+  data-giscus-lang={lang}
+>
   <h2>章节评论</h2>
   {
     repoId && categoryId ? (
       <>
-        <script
-          src="https://giscus.app/client.js"
-          data-repo={repo}
-          data-repo-id={repoId}
-          data-category={category}
-          data-category-id={categoryId}
-          data-mapping={mapping}
-          data-strict={strict}
-          data-reactions-enabled={reactionsEnabled}
-          data-emit-metadata={emitMetadata}
-          data-input-position={inputPosition}
-          data-theme={theme}
-          data-lang={lang}
-          crossorigin="anonymous"
-          async
-        ></script>
         <script>
           import { createGiscusThemeMessage, resolveGiscusTheme } from "../utils/giscus-theme.ts";
 
@@ -43,18 +41,82 @@ const lang = import.meta.env.PUBLIC_GISCUS_LANG ?? "zh-CN";
             }
 
             const configuredTheme = section.dataset.giscusTheme ?? "preferred_color_scheme";
+            const resolveThemeFromPage = () => {
+              const isDark = document.documentElement.classList.contains("dark");
+              return resolveGiscusTheme(configuredTheme, isDark);
+            };
 
-            const syncGiscusTheme = () => {
-              const frame = section.querySelector("iframe.giscus-frame");
-              if (!(frame instanceof HTMLIFrameElement) || !frame.contentWindow) {
+            const injectGiscusClient = () => {
+              if (section.querySelector('script[data-giscus-client="true"]')) {
                 return;
               }
 
-              const isDark = document.documentElement.classList.contains("dark");
-              const nextTheme = resolveGiscusTheme(configuredTheme, isDark);
+              const repo = section.dataset.giscusRepo;
+              const repoId = section.dataset.giscusRepoId;
+              const category = section.dataset.giscusCategory;
+              const categoryId = section.dataset.giscusCategoryId;
+              if (!repo || !repoId || !category || !categoryId) {
+                return;
+              }
+
+              const clientScript = document.createElement("script");
+              clientScript.src = "https://giscus.app/client.js";
+              clientScript.setAttribute("data-giscus-client", "true");
+              clientScript.setAttribute("data-repo", repo);
+              clientScript.setAttribute("data-repo-id", repoId);
+              clientScript.setAttribute("data-category", category);
+              clientScript.setAttribute("data-category-id", categoryId);
+              clientScript.setAttribute("data-mapping", section.dataset.giscusMapping ?? "pathname");
+              clientScript.setAttribute("data-strict", section.dataset.giscusStrict ?? "0");
+              clientScript.setAttribute(
+                "data-reactions-enabled",
+                section.dataset.giscusReactionsEnabled ?? "1"
+              );
+              clientScript.setAttribute(
+                "data-emit-metadata",
+                section.dataset.giscusEmitMetadata ?? "0"
+              );
+              clientScript.setAttribute(
+                "data-input-position",
+                section.dataset.giscusInputPosition ?? "top"
+              );
+              clientScript.setAttribute("data-theme", resolveThemeFromPage());
+              clientScript.setAttribute("data-lang", section.dataset.giscusLang ?? "zh-CN");
+              clientScript.crossOrigin = "anonymous";
+              clientScript.async = true;
+              section.append(clientScript);
+            };
+
+            let activeFrame: HTMLIFrameElement | null = null;
+            let isFrameReady = false;
+
+            const syncGiscusTheme = () => {
+              const frame = activeFrame;
+              if (!(frame instanceof HTMLIFrameElement) || !frame.contentWindow || !isFrameReady) {
+                return;
+              }
+
               frame.contentWindow.postMessage(
-                createGiscusThemeMessage(nextTheme),
+                createGiscusThemeMessage(resolveThemeFromPage()),
                 "https://giscus.app"
+              );
+            };
+
+            const registerFrame = () => {
+              const frame = section.querySelector("iframe.giscus-frame");
+              if (!(frame instanceof HTMLIFrameElement) || frame === activeFrame) {
+                return;
+              }
+
+              activeFrame = frame;
+              isFrameReady = false;
+              frame.addEventListener(
+                "load",
+                () => {
+                  isFrameReady = true;
+                  syncGiscusTheme();
+                },
+                { once: true }
               );
             };
 
@@ -71,10 +133,13 @@ const lang = import.meta.env.PUBLIC_GISCUS_LANG ?? "zh-CN";
               attributeFilter: ["class"]
             });
 
-            const frameObserver = new MutationObserver(syncGiscusTheme);
+            const frameObserver = new MutationObserver(() => {
+              registerFrame();
+            });
             frameObserver.observe(section, { childList: true, subtree: true });
 
-            syncGiscusTheme();
+            injectGiscusClient();
+            registerFrame();
           })();
         </script>
       </>
