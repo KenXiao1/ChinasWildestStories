@@ -58,6 +58,8 @@ const next = currentIndex >= 0 && currentIndex < siblingChapters.length - 1
     ) : <span>已是最后一章 →</span>}
   </nav>
 
+  <button id="back-top" aria-label="返回顶部" title="返回顶部">↑</button>
+
   <GiscusComments />
 
   <script is:inline define:vars={{ bookId: chapter.data.book_id, chapterId: chapter.data.chapter_id, chapterTitle: chapter.data.title }}>
@@ -79,6 +81,22 @@ const next = currentIndex >= 0 && currentIndex < siblingChapters.length - 1
       hist.unshift({ book: bookId, id: chapterId, title: chapterTitle, ts: Date.now() });
       if(hist.length > 50) hist = hist.slice(0, 50);
       localStorage.setItem('readHistory', JSON.stringify(hist));
+
+      // — 键盘左右切换章节 —
+      var links = document.querySelectorAll('.pager a');
+      var prevHref, nextHref;
+      links.forEach(function(a){ if(a.textContent.indexOf('←')!==-1) prevHref=a.href; else nextHref=a.href; });
+      document.addEventListener('keydown', function(e){
+        if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable) return;
+        if(e.key==='ArrowLeft'&&prevHref) location.href=prevHref;
+        if(e.key==='ArrowRight'&&nextHref) location.href=nextHref;
+      });
+
+      // — 返回顶部 —
+      var btn = document.getElementById('back-top');
+      window.addEventListener('scroll', function(){ btn.style.display = window.scrollY > 400 ? '' : 'none'; });
+      btn.style.display = 'none';
+      btn.onclick = function(){ window.scrollTo({ top: 0, behavior: 'smooth' }); };
     })();
   </script>
 </BaseLayout>
@@ -136,4 +154,20 @@ const next = currentIndex >= 0 && currentIndex < siblingChapters.length - 1
     font-size: 0.93rem;
   }
   .pager a:hover { color: var(--accent); }
+  #back-top {
+    position: fixed;
+    right: 1.2rem;
+    bottom: 1.5rem;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--muted);
+    font-size: 1.1rem;
+    cursor: pointer;
+    opacity: .75;
+    transition: opacity .2s, border-color .2s;
+  }
+  #back-top:hover { opacity: 1; border-color: var(--accent); color: var(--accent); }
 </style>
