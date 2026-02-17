@@ -20,6 +20,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 </BaseLayout>
 
 <script>
+  import {
+    buildPassageResults,
+    isSingleHanQuery,
+    mergeSearchHitsForSingleHanQuery
+  } from "../utils/search-fallback";
+
   (function () {
     const input = document.querySelector("#query");
     const resultEl = document.querySelector("#results");
@@ -34,6 +40,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     }
 
     let pagefind = null;
+    let allDocumentsCache = null;
     let timer = null;
     let activeSearchToken = 0;
 
@@ -61,6 +68,28 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       li.appendChild(link);
       li.appendChild(desc);
       resultEl.appendChild(li);
+    }
+
+    async function loadAllDocuments(mod) {
+      if (allDocumentsCache) {
+        return allDocumentsCache;
+      }
+
+      const response = await mod.search(null);
+      const documents = [];
+
+      for (const hit of response.results) {
+        const data = await hit.data();
+        documents.push({
+          url: data.url,
+          title: data.meta.title,
+          excerpt: stripTags(data.excerpt || ""),
+          content: stripTags(data.content || "")
+        });
+      }
+
+      allDocumentsCache = documents;
+      return documents;
     }
 
     async function ensurePagefind() {
@@ -94,25 +123,53 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       setStatus("正在搜索...");
       try {
         const response = await mod.search(keyword);
-        const topResults = response.results.slice(0, 30);
+        if (token !== activeSearchToken) {
+          return;
+        }
 
-        clearResults();
+        const topResults = response.results.slice(0, 30);
+        const directHits = [];
+
         for (const hit of topResults) {
           if (token !== activeSearchToken) {
             return;
           }
           const data = await hit.data();
-          appendResult({
+          directHits.push({
             url: data.url,
             title: data.meta.title,
-            excerpt: stripTags(data.excerpt || "")
+            excerpt: stripTags(data.excerpt || ""),
+            content: stripTags(data.content || "")
           });
         }
 
-        if (topResults.length === 0) {
+        let finalHits = directHits;
+        if (isSingleHanQuery(keyword)) {
+          const allDocs = await loadAllDocuments(mod);
+          if (token !== activeSearchToken) {
+            return;
+          }
+          finalHits = mergeSearchHitsForSingleHanQuery(keyword, directHits, allDocs, 30);
+        }
+
+        const passageResult = buildPassageResults(keyword, finalHits, 30);
+        const displayHits = passageResult.hits;
+
+        clearResults();
+        for (const hit of displayHits) {
+          appendResult(hit);
+        }
+
+        if (displayHits.length === 0) {
           setStatus(`没有找到“${keyword}”相关结果。`);
         } else {
-          setStatus(`找到 ${topResults.length} 条结果。`);
+          if (passageResult.totalMatches > 0) {
+            setStatus(
+              `找到 ${passageResult.totalMatches} 处命中，分布在 ${passageResult.chaptersWithMatches} 个章节（展示前 ${displayHits.length} 条）。`
+            );
+          } else {
+            setStatus(`找到 ${displayHits.length} 条结果。`);
+          }
         }
       } catch (_) {
         clearResults();
