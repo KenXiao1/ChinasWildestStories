@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { mkdtempSync, rmSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import {
   cp,
   copyFile,
@@ -14,6 +14,7 @@ import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 import {
   extractMediaRefsFromContent,
+  markSubtitlesInMarkdown,
   mergeFullUpdateManifest,
   parseChapterIdFromFilename,
   resolveMediaRelativePathFromRef,
@@ -85,6 +86,28 @@ function runPandoc(docxPath, outputDir) {
   }
 
   return markdownPath;
+}
+
+function extractSubtitlesFromDocx(docxPath, tempDir) {
+  const unzipDir = join(tempDir, "docx_xml");
+  const res = spawnSync("unzip", ["-o", docxPath, "word/document.xml", "-d", unzipDir], { encoding: "utf8" });
+  if (res.status !== 0) return new Set();
+  let xml;
+  try { xml = readFileSync(join(unzipDir, "word", "document.xml"), "utf-8"); } catch { return new Set(); }
+  const bodyColor = "36363D";
+  const chapterRe = /^(开幕|第[一二三四五六七八九十百零两\d]+幕)/u;
+  const subtitles = new Set();
+  let afterFirstChapter = false;
+  for (const para of xml.split(/(?=<w:p[ >])/)) {
+    const text = para.replace(/<[^>]+>/g, "").replace(/\s+/g, "").trim();
+    if (!text) continue;
+    if (chapterRe.test(text)) { afterFirstChapter = true; continue; }
+    if (!afterFirstChapter || text.length > 30) continue;
+    const colors = [...para.matchAll(/w:color w:val="([^"]+)"/g)].map(m => m[1]);
+    const nonBody = [...new Set(colors)].filter(c => c !== bodyColor);
+    if (nonBody.length > 0) subtitles.add(text);
+  }
+  return subtitles;
 }
 
 async function readManifest(manifestPath, bookId) {
@@ -272,9 +295,10 @@ async function ingestFull({
   projectRoot,
   manifestPath,
   updatedAt,
-  reset
+  reset,
+  subtitles
 }) {
-  const rawMarkdown = await readFile(markdownPath, "utf8");
+  const rawMarkdown = markSubtitlesInMarkdown(await readFile(markdownPath, "utf8"), subtitles);
   const splitChapters = splitFullMarkdownIntoChapters(rawMarkdown);
   if (splitChapters.length === 0) {
     fail("No chapters were detected in full ingestion mode.");
@@ -360,9 +384,10 @@ async function ingestChapter({
   manifestPath,
   updatedAt,
   chapterId,
-  order
+  order,
+  subtitles
 }) {
-  const rawMarkdown = await readFile(markdownPath, "utf8");
+  const rawMarkdown = markSubtitlesInMarkdown(await readFile(markdownPath, "utf8"), subtitles);
   const chunks = splitFullMarkdownIntoChapters(rawMarkdown);
   const selected = chunks[0] ?? {
     title: basename(inputFile, extname(inputFile)),
@@ -421,6 +446,7 @@ async function main() {
 
   const tempRoot = mkdtempSync(join(tmpdir(), "cws-ingest-"));
   const markdownPath = runPandoc(inputFile, tempRoot);
+  const subtitles = extractSubtitlesFromDocx(inputFile, tempRoot);
   const manifestPath = join(projectRoot, "content", "manifests", `${bookId}.json`);
   const updatedAt = new Date().toISOString();
 
@@ -433,7 +459,8 @@ async function main() {
         projectRoot,
         manifestPath,
         updatedAt,
-        reset
+        reset,
+        subtitles
       });
     } else {
       const parsedChapterId = parseChapterIdFromFilename(basename(inputFile));
@@ -448,7 +475,8 @@ async function main() {
         manifestPath,
         updatedAt,
         chapterId,
-        order
+        order,
+        subtitles
       });
     }
 

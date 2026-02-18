@@ -1,6 +1,6 @@
 {
   "book_id": "book-1",
-  "updated_at": "2026-02-17T07:42:39.827Z",
+  "updated_at": "2026-02-18T14:50:23.927Z",
   "chapters": [
     {
       "book_id": "book-1",
@@ -10,8 +10,8 @@
       "title": "开幕：21世纪大审判",
       "source_type": "full",
       "source_file": "全中国最激烈故事第一部—泰山府（1）.docx",
-      "content_hash": "b4f24337c98f4779cf2c703c896b644ee6e4fb1909acd3443410538d1517fcad",
-      "updated_at": "2026-02-17T07:42:39.827Z",
+      "content_hash": "882bf70a98c2399f718932e02cc2ac86f8fa4ea26941be4c9e89d8cebc96ac7d",
+      "updated_at": "2026-02-18T14:50:23.927Z",
       "status": "active"
     },
     {
@@ -22,8 +22,8 @@
       "title": "第二幕：都他妈骗老子",
       "source_type": "full",
       "source_file": "全中国最激烈故事第一部—泰山府（1）.docx",
-      "content_hash": "d1386568c44865164628e400cf034ece50a0c7c239b20f5c5939a8c14a857bf0",
-      "updated_at": "2026-02-17T07:42:39.827Z",
+      "content_hash": "63c4db0e2b87fa6700179bd7267430bff4cabea6b6e57ebd87a2cb42ac06ac06",
+      "updated_at": "2026-02-18T14:50:23.927Z",
       "status": "active"
     },
     {
@@ -34,8 +34,8 @@
       "title": "第三幕：在故乡",
       "source_type": "full",
       "source_file": "全中国最激烈故事第一部—泰山府（1）.docx",
-      "content_hash": "0ed52145034d0f5193584b91314930b3ff25854a175f73684b0da9014e4aee71",
-      "updated_at": "2026-02-17T07:42:39.827Z",
+      "content_hash": "ae40066209ffaa5b9f19082cb6777b137251fb67b164643f91a25bab8a80771a",
+      "updated_at": "2026-02-18T14:50:23.927Z",
       "status": "active"
     },
     {
@@ -46,8 +46,8 @@
       "title": "第四幕：离乡小记",
       "source_type": "full",
       "source_file": "全中国最激烈故事第一部—泰山府（1）.docx",
-      "content_hash": "9ac57f2bd5db60ea8c1c4e5ed3bcd2bbe6f6c84440419e94a81c04d04aab1866",
-      "updated_at": "2026-02-17T07:42:39.827Z",
+      "content_hash": "5c8c6476800231dfe93190964b9926a225fc551507fc58c1e29a1655c5590190",
+      "updated_at": "2026-02-18T14:50:23.927Z",
       "status": "active"
     },
     {
@@ -58,8 +58,8 @@
       "title": "第五幕：双城记",
       "source_type": "full",
       "source_file": "全中国最激烈故事第一部—泰山府（1）.docx",
-      "content_hash": "55d372f9ab5c3eb82fc367873feb2a53928cc4867c3a804ab62a919d487bb363",
-      "updated_at": "2026-02-17T07:42:39.827Z",
+      "content_hash": "94654e8abb18e49d4862304a15296000b11ae9c0d503a516c20a87e904b6ce83",
+      "updated_at": "2026-02-18T14:50:23.927Z",
       "status": "active"
     },
     {
@@ -70,8 +70,8 @@
       "title": "第六幕：张天仇其人",
       "source_type": "full",
       "source_file": "全中国最激烈故事第一部—泰山府（1）.docx",
-      "content_hash": "25349b0785d962e745b255ecacc5a481cbaa328c01b1c7da81b893fb8d6f3314",
-      "updated_at": "2026-02-17T07:42:39.827Z",
+      "content_hash": "60aae438eeb19efaaca5f8141eecea814c30f2385fcb33d7032ae2366c2bbf15",
+      "updated_at": "2026-02-18T14:50:23.927Z",
       "status": "active"
     },
     {
@@ -82,8 +82,8 @@
       "title": "第七幕：异乡来客",
       "source_type": "full",
       "source_file": "全中国最激烈故事第一部—泰山府（1）.docx",
-      "content_hash": "f46b429264ca39bd05bf8905e7f0a4615ced312eae129a8f7d487a638cfef762",
-      "updated_at": "2026-02-17T07:42:39.827Z",
+      "content_hash": "04600b060135f0988b6d6868354092b6b704affd63ecd39b2df89e1628dabd47",
+      "updated_at": "2026-02-18T14:50:23.927Z",
       "status": "active"
     },
     {
@@ -94,8 +94,8 @@
       "title": "第八幕：这哥们真有点那啥了",
       "source_type": "full",
       "source_file": "全中国最激烈故事第一部—泰山府（1）.docx",
-      "content_hash": "1b58866dc9dd349f7062e6dd00e3111d946ef53e7fa99e4aeb0be838fe0f2679",
-      "updated_at": "2026-02-17T07:42:39.827Z",
+      "content_hash": "0c76b62c7490de1289c49e220f956e2ac7b7ef6bb9a9c99af5d13c94958d77c8",
+      "updated_at": "2026-02-18T14:50:23.927Z",
       "status": "active"
     },
     {
@@ -106,8 +106,8 @@
       "title": "第九幕：世说新语",
       "source_type": "full",
       "source_file": "全中国最激烈故事第一部—泰山府（1）.docx",
-      "content_hash": "c5860dd63bc307cb55f049b46d99288be0efa32bc24568edf049c1c589a325f0",
-      "updated_at": "2026-02-17T07:42:39.827Z",
+      "content_hash": "420aa783fa1dcc9eaae67b00a8b9dec5c387411585267f919e0f8d88e7ecc813",
+      "updated_at": "2026-02-18T14:50:23.927Z",
       "status": "active"
     },
     {
@@ -118,8 +118,8 @@
       "title": "第十幕：大卑琐",
       "source_type": "full",
       "source_file": "全中国最激烈故事第一部—泰山府（1）.docx",
-      "content_hash": "1efd21d754ed0de1a01468357f31c7379e768e23c818c73de258413683b59907",
-      "updated_at": "2026-02-17T07:42:39.827Z",
+      "content_hash": "d01f0f50c41a1e255fd430c2eb48aa009f188d84f72de88fa196da3852d3d612",
+      "updated_at": "2026-02-18T14:50:23.927Z",
       "status": "active"
     },
     {
@@ -130,8 +130,8 @@
       "title": "第十一幕：头发跟蹦蹦床一样",
       "source_type": "full",
       "source_file": "全中国最激烈故事第一部—泰山府（1）.docx",
-      "content_hash": "491478c85bb5a05d58ba18ed3aadeed901234c540365479513f11a9f735072a2",
-      "updated_at": "2026-02-17T07:42:39.827Z",
+      "content_hash": "2c8200803b07d41dea9e64486aa1bd4ef69373894a4348a230b1adf78b883577",
+      "updated_at": "2026-02-18T14:50:23.927Z",
       "status": "active"
     },
     {
@@ -142,8 +142,8 @@
       "title": "第十二幕：天注定",
       "source_type": "full",
       "source_file": "全中国最激烈故事第一部—泰山府（1）.docx",
-      "content_hash": "e75338cd0c868d8dfcaac40801d88f40c1047aac271bb1784af9d7c87dc0eaa8",
-      "updated_at": "2026-02-17T07:42:39.827Z",
+      "content_hash": "8956434d9398e6109df263a328e4596cbf25c445a31869b392632120b879b91b",
+      "updated_at": "2026-02-18T14:50:23.927Z",
       "status": "active"
     },
     {
@@ -154,8 +154,8 @@
       "title": "第十三幕：史上最大规模冲突",
       "source_type": "full",
       "source_file": "全中国最激烈故事第一部—泰山府（1）.docx",
-      "content_hash": "a083c4949b15ffd6a78a7aa68d9a831f6df2fd1179597fc8826790067fceba47",
-      "updated_at": "2026-02-17T07:42:39.827Z",
+      "content_hash": "88d1325d51f6c37b96699e3f283831f788708a9969541d8410e61966000ce41b",
+      "updated_at": "2026-02-18T14:50:23.927Z",
       "status": "active"
     },
     {
@@ -166,8 +166,8 @@
       "title": "第十四幕：史前史",
       "source_type": "full",
       "source_file": "全中国最激烈故事第一部—泰山府（1）.docx",
-      "content_hash": "473b255bf7c6bbf847d77ba2b9a7a07871329a728439c400274ee2f79dd7e8c6",
-      "updated_at": "2026-02-17T07:42:39.827Z",
+      "content_hash": "bf8e5d1ed484e8541607115be40162cf3b7ff4bd79223b56d9c0c5f6f0f45bb1",
+      "updated_at": "2026-02-18T14:50:23.927Z",
       "status": "active"
     }
   ]

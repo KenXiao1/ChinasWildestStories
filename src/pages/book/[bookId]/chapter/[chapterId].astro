@@ -201,6 +201,12 @@ const next = currentIndex >= 0 && currentIndex < siblingChapters.length - 1
     margin: 0;
     font-size: clamp(1.35rem, 3.5vw, 2rem);
   }
+  :global(.chapter > h2) {
+    margin: 1.8rem 0 0.6rem;
+    font-size: 1.15em;
+    color: var(--accent);
+    text-align: center;
+  }
   :global(.chapter img) {
     max-width: 100%;
     height: auto;

@@ -408,3 +408,22 @@ export function upsertChapterManifest({
   const archivedEntries = entries.filter((entry) => entry.status === "archived");
   return normalizeOrders([...activeEntries, ...archivedEntries]);
 }
+
+export function markSubtitlesInMarkdown(markdown, subtitleTexts) {
+  if (!subtitleTexts || subtitleTexts.size === 0) return markdown;
+  const lines = String(markdown).split(/\r?\n/);
+  for (let i = 0; i < lines.length; i++) {
+    const trimmed = lines[i].trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const plain = trimmed.replace(/<[^>]+>/g, "").replace(/\*+/g, "").trim();
+    const plainCompact = plain.replace(/\s+/g, "");
+    if (plainCompact && subtitleTexts.has(plainCompact)) {
+      const prev = i > 0 ? lines[i - 1].trim() : "";
+      const next = i < lines.length - 1 ? lines[i + 1].trim() : "";
+      if (prev === "" && next === "") {
+        lines[i] = `## ${plain}`;
+      }
+    }
+  }
+  return lines.join("\n");
+}

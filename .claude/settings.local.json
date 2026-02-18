@@ -3,7 +3,13 @@
     "allow": [
       "Bash(ls:*)",
       "mcp__firecrawl__firecrawl_scrape",
-      "WebFetch(domain:cn-nonsense.pages.dev)"
+      "WebFetch(domain:cn-nonsense.pages.dev)",
+      "Bash(python3 -c:*)",
+      "Bash(node -e:*)",
+      "Bash(npm run test)",
+      "Bash(npm run ingest:full:*)",
+      "Bash(grep:*)",
+      "Bash(npm run build)"
     ]
   }
 }
